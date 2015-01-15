@@ -69,6 +69,17 @@ describe('Authorise', function() {
       .expect(200, /nightworld/, done);
   });
 
+  it('should require application/x-www-form-urlencoded when access token is ' +
+      'in body', function (done) {
+    var app = bootstrap('mockValid');
+
+    request(app)
+      .post('/')
+      .send({ access_token: 'thom' })
+      .expect(400, /content type must be application\/x-www-form-urlencoded/i,
+        done);
+  });
+
   it('should not allow GET when access token in body', function (done) {
     var app = bootstrap('mockValid');
 

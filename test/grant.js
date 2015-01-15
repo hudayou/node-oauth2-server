@@ -57,6 +57,16 @@ describe('Grant', function() {
         .expect(400, /method must be POST/i, done);
     });
 
+    it('should only allow application/x-www-form-urlencoded', function (done) {
+      var app = bootstrap();
+
+      request(app)
+        .post('/oauth/token')
+        .set('Content-Type', 'application/json')
+        .send({}) // Required to be valid JSON
+        .expect(400, /application\/x-www-form-urlencoded/i, done);
+    });
+
     it('should check grant_type exists', function (done) {
       var app = bootstrap();
 
